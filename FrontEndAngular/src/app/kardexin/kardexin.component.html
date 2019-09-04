@@ -1,0 +1,95 @@
+<div class="ui-g-12 account-wall">
+   <p-toast></p-toast>
+   <p-confirmDialog acceptLabel="Si" rejectLabel="Cancelar" header="Confirmar" icon="pi pi-exclamation-triangle">
+   </p-confirmDialog>
+   <div class="ui-g-4">
+
+      <p-panel header="Entrada de productos">
+         <p-fieldset legend="">
+
+            <form [formGroup]="formProduct" (ngSubmit)="validarAntesDeGrabar()">
+
+               <input type="text" formControlName="idkardexin" pInputText hidden="hidden" />
+               <input type="date" formControlName="creationdate" pInputText hidden="hidden" />
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Código de entrada</label>
+                  <input type="number" disabled="true" formControlName="sequential" pInputText>
+               </div>
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Descripción</label>
+                  <input type="text" formControlName="description" pInputText>
+               </div>
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Persona a cargo de la entrada</label>
+                  <p-autoComplete [(ngModel)]="keywordPerson" field="name" formControlName="persona" [suggestions]="persons" placeholder="Persona (Vendedor)" (completeMethod)="searchPerson($event)"></p-autoComplete>
+               </div>
+
+               <div class="ui-g-12">
+                  <p-fieldset legend="Producto / Entrada">
+                     <div class="ui-g-12">
+                        <label class="custom-field-label">Producto</label>
+                        <p-autoComplete [(ngModel)]="keywordProduct" field="name" formControlName="producto" [suggestions]="products" placeholder="Producto" (completeMethod)="searchProduct($event)"></p-autoComplete>
+                     </div>
+                     <div class="ui-g-12">
+                        <label class="custom-field-label">Cantidad</label>
+                        <input type="number" formControlName="stockmovement" pInputText>
+                     </div>
+                     <div class="ui-g-12">
+                        <p-button label="Agregar producto" type="button" (onClick)="agregarProducto()" style="margin-right: 10px"></p-button>
+                     </div>
+                  </p-fieldset>
+               </div>     
+
+               <div class="ui-g-12">
+                  <div class="ui-g-6">
+                     <p-button label="Guardar" style="margin-right: 10px" type="submit" [disabled]="!formProduct.valid">
+                     </p-button>
+                  </div>
+                  <div class="ui-g-6">
+                     <p-button label="Limpiar" type="reset" (onClick)="clearForm()"></p-button>
+                  </div>
+               </div>
+            </form>
+         </p-fieldset>
+      </p-panel>
+      <p></p>
+   </div>
+
+   <div class="ui-g-8">
+      <p-panel header="Productos/Entrada">
+         <p-table id="dataKardex" [value]="kardexInDetails" [responsive]="true" [paginator]="true" [rows]="9" [resizableColumns]="true"
+            columnResizeMode="expand">
+            <ng-template pTemplate="header">
+               <tr>
+                  <th *ngFor="let col of dataTableCols" pResizableColumn style="background-color: #E0F0F0;">
+                     {{col.header}}
+                  </th>
+                  <th style="background-color: #E0F0F0;">
+                     
+                  </th>
+               </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-kardexindetail let-rowData let-columns="columns">
+               <tr>
+                  <td (click)="onEditKardex(kardexindetail)" *ngFor="let col of dataTableCols" class="ui-resizable-column">
+                     {{kardexindetail[col.field]}}
+                  </td>
+                  <td align="center">
+                     <button (click)="deleteConfirm(kardexindetail)" icon="pi-times-circle">X</button>                    
+                  </td>
+               </tr>
+            </ng-template>
+
+         </p-table>
+      </p-panel>
+   </div>
+</div>
+<div class="alert alert-danger alert-dismissable fuente-project" *ngIf="msg">
+   <a class="close" (click)="closeAlert()">
+      &times;
+   </a>
+   <h6>{{msg}}</h6>
+</div>

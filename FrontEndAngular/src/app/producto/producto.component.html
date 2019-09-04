@@ -1,0 +1,94 @@
+<div class="ui-g-12 account-wall">
+   <p-toast></p-toast>
+   <p-confirmDialog acceptLabel="Si" rejectLabel="Cancelar" header="Confirmar" icon="pi pi-exclamation-triangle">
+   </p-confirmDialog>
+   <div class="ui-g-4">
+
+      <p-panel header="Registro de productos">
+         <p-fieldset legend="">
+
+            <form [formGroup]="formProduct" (ngSubmit)="validarAntesDeGrabar()">
+
+               <input type="text" formControlName="idproduct" pInputText hidden="hidden" />
+               <input type="date" formControlName="creationdate" pInputText hidden="hidden" />
+               <input type="date" formControlName="modificationdate" pInputText hidden="hidden" />
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Nombre</label>
+                  <input type="text" formControlName="name" pInputText>
+               </div>
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Descripción</label>
+                  <input type="text" formControlName="description" pInputText>
+               </div>
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Categoría de producto</label>
+                  <p-dropdown optionLabel="name" [options]="categoriaProducto"
+                     placeholder="Seleccione una categoría" formControlName="categoriaproducto"
+                     (onChange)="onChangeCategoria()" [style]="{'width':'100%'}">
+                  </p-dropdown>
+               </div>
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Precio</label>
+                  <input type="number" formControlName="price" pInputText>
+               </div>
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Stock</label>
+                  <input disabled="true" type="number" formControlName="stock" pInputText>
+               </div>
+
+               <div class="ui-g-12">
+                  <div class="ui-g-6">
+                     <p-button label="Guardar" style="margin-right: 10px" type="submit" [disabled]="!formProduct.valid">
+                     </p-button>
+                  </div>
+                  <div class="ui-g-6">
+                     <p-button label="Limpiar" type="button" (onClick)="clearForm()"></p-button>
+
+                  </div>
+               </div>
+            </form>
+         </p-fieldset>
+      </p-panel>
+      <p></p>
+   </div>
+
+   <div class="ui-g-8">
+      <p-panel header="Datos">
+         <p-table id="dataProductos" [value]="products" [responsive]="true" [paginator]="true" [rows]="9" [resizableColumns]="true"
+            columnResizeMode="expand">
+            <ng-template pTemplate="header">
+               <tr>
+                  <th *ngFor="let col of dataTableCols" pResizableColumn style="background-color: #E0F0F0;">
+                     {{col.header}}
+                  </th>
+                  <th style="background-color: #E0F0F0;">
+                     
+                  </th>
+               </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product let-rowData let-columns="columns">
+               <tr>
+                  <td (click)="onEditProduct(product)" *ngFor="let col of dataTableCols" class="ui-resizable-column">
+                     {{product[col.field]}}
+                  </td>
+                  <td align="center">
+                     <button (click)="deleteConfirm(product)" icon="pi-times-circle">X</button>                    
+                  </td>
+               </tr>
+            </ng-template>
+
+         </p-table>
+      </p-panel>
+   </div>
+</div>
+<div class="alert alert-danger alert-dismissable fuente-project" *ngIf="msg">
+   <a class="close" (click)="closeAlert()">
+      &times;
+   </a>
+   <h6>{{msg}}</h6>
+</div>

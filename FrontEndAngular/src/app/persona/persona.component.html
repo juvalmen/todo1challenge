@@ -1,0 +1,89 @@
+<div class="ui-g-12 account-wall">
+   <p-toast></p-toast>
+   <p-confirmDialog acceptLabel="Si" rejectLabel="Cancelar" header="Confirmar" icon="pi pi-exclamation-triangle">
+   </p-confirmDialog>
+   <div class="ui-g-4">
+
+      <p-panel header="Registro de personas (Vendedores)">
+         <p-fieldset legend="">
+
+            <form [formGroup]="formPerson" (ngSubmit)="validarAntesDeGrabar()">
+
+               <input type="text" formControlName="idperson" pInputText hidden="hidden" />
+               <input type="date" formControlName="creationdate" pInputText hidden="hidden" />
+               <input type="date" formControlName="modificationdate" pInputText hidden="hidden" />
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Identificación</label>
+                  <input type="text" formControlName="identificationnumber" pInputText>
+               </div>
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Nombre</label>
+                  <input type="text" formControlName="name" pInputText>
+               </div>
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Apellido</label>
+                  <input type="text" formControlName="lastname" pInputText>
+               </div>
+
+               <div class="ui-g-12">
+                  <label class="custom-field-label">Categoría</label>
+                  <p-dropdown optionLabel="name" [options]="categoriaPersona"
+                     placeholder="Seleccione una categoría" formControlName="categoriapersona"
+                     (onChange)="onChangeCategoria()" [style]="{'width':'100%'}">
+                  </p-dropdown>
+               </div>
+
+               <div class="ui-g-12">
+                  <div class="ui-g-6">
+                     <p-button label="Guardar" style="margin-right: 10px" type="submit" [disabled]="!formPerson.valid">
+                     </p-button>
+                  </div>
+                  <div class="ui-g-6">
+                     <p-button label="Limpiar" type="reset" (onClick)="clearForm()"></p-button>
+
+                  </div>
+               </div>
+            </form>
+         </p-fieldset>
+      </p-panel>
+      <p></p>
+   </div>
+
+   <div class="ui-g-8">
+      <p-panel header="Datos">
+         <p-table id="dataPersonas" [value]="persons" [responsive]="true" [paginator]="true" [rows]="9" [resizableColumns]="true"
+            columnResizeMode="expand">
+            <ng-template pTemplate="header">
+               <tr>
+                  <th *ngFor="let col of dataTableCols" pResizableColumn style="background-color: #E0F0F0;">
+                     {{col.header}}
+                  </th>
+                  <th style="background-color: #E0F0F0;">
+                     
+                  </th>
+               </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-person let-rowData let-columns="columns">
+               <tr>
+                  <td (click)="onEditPerson(person)" *ngFor="let col of dataTableCols" class="ui-resizable-column">
+                     {{person[col.field]}}
+                  </td>
+                  <td align="center">
+                     <button (click)="deleteConfirm(person)" icon="pi-times-circle">X</button>                    
+                  </td>
+               </tr>
+            </ng-template>
+
+         </p-table>
+      </p-panel>
+   </div>
+</div>
+<div class="alert alert-danger alert-dismissable fuente-project" *ngIf="msg">
+   <a class="close" (click)="closeAlert()">
+      &times;
+   </a>
+   <h6>{{msg}}</h6>
+</div>

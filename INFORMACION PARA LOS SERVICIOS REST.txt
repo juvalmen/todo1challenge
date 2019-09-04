@@ -1,0 +1,8 @@
+INFORMACION PARA LOS SERVICIOS REST
+-----------------------------------
+
+Para mas información desde localhost ingresar: 
+http://localhost:8080/todo1/swagger-ui.html
+
+Server context: /todo1
+Port: 8080

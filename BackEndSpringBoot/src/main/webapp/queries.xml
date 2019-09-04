@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+	<entry key="getPersonaPorIdentificacionCuit">
+    <![CDATA[
+        SELECT * from persona WHERE cuit = ?  
+    ]]>
+
+	</entry>
+	<entry key="getPersonasList">
+    <![CDATA[
+		SELECT per.idpersona 
+		,p.nombre 
+		,per.apellido 
+		,per.dni 
+		,per.cuit 
+		,per.razonsocial 
+		,per.aniofundacion 
+		,cat.idcategoria as idCategoriaPersona 
+		,cat.valor as valorCategoriaPersona 
+		,cat.nombre as descripcionCategoriaPersona 
+		FROM persona per 
+		INNER JOIN categoria per.categoriapersona = cat ON cat.idcategoria 
+    ]]>
+	</entry>
+
+</properties>

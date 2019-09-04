@@ -1,0 +1,23 @@
+.custom-field-label {
+  width: 100%;
+   font-size: 0.9em;
+}
+
+p-button {
+   width: 100%;
+}
+
+.account-wall {
+  background-color: #c7d4da;
+}
+
+#dataKardex tr:hover { 
+  background-color: rgb(162, 157, 189);
+}
+
+#dataKardex td {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
