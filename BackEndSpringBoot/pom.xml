@@ -11,7 +11,7 @@
 
     <description>Prueba Técnica Todo1</description>
 
-    <modelVersion>1.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
     <groupId>com.todo1</groupId>
     <artifactId>todo1-spring-boot-technicaltest2</artifactId>
     <version>0.0.1</version>
